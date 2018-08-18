@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+
+        <title>Hangman</title>
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        
+
+    </head>
+
+    <body background="assets/images/pyramid.png">
+        <div class="container">
+            <div class="row">
+                  <div class="col-sm-12 text-center">
+                        <h1> HANGMAN</h1>
+                        <div class="h80s" style="transform: rotate(-20deg);"> 80s style</div>                      
+
+                </div>
+           </div>
+           <div class="row">
+               <div class="col-sm-6 border-dashed text-center">
+            
+               </div>
+               <div class="col-sm-6 border-dashed text-center">
+                    <br>
+                    <p> Press any kit to get</p>
+                    <p> STARTED!!!</p>
+                    <br>
+                    <p> Wins : <span id="win-text"><strong>....</strong></span></p>
+                    <p> Losts : <span id="lost-text"><strong>....</strong></span></p>
+                    <p> <span id="letter-1"></span>
+                        <span id="letter-2"></span>
+                        <span id="letter-3"></span>
+                        <span id="letter-4"></span>
+                        <span id="letter-5"></span> 
+                        <span id="letter-6"></span>
+                        <span id="letter-7"></span>
+                        <span id="letter-8"></span>
+                    </P>
+ 
+                </div>
+           </div>
+        </div>
+
+    </body>
+
+        <!-- We have to put this at the end of our document to ensure the user-text
+         span exists when we try to access it. -->
+
+    <script type="text/javascript">
+        // Let's start by grabbing a reference to the <span> below.
+        var letter1 = document.getElementById("letter-1");
+        var letter2 = document.getElementById("letter-2");
+        var letter3 = document.getElementById("letter-3");
+        var letter4 = document.getElementById("letter-4");
+        var letter5 = document.getElementById("letter-5");
+        var letter6 = document.getElementById("letter-6");
+        var letter7 = document.getElementById("letter-7");
+        var letter8 = document.getElementById("letter-8");
+        var winText = document.getElementById("win-text");
+        var lossText = document.getElementById("loss-text");
+        var win=0;// win and lost variables
+        var loss=0;
+        
+           
+        // Next, we give JavaScript a function to execute when onkeyup event fires.
+        document.onkeyup = function(event) {
+            letter1.textContent = event.key;//
+        };
+      </script>
+</html>
