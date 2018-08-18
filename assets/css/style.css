@@ -1,0 +1,32 @@
+
+h1 {
+    font-size:80px;
+    color: white;
+    text-shadow: 2px 2px 4px black, 0 0 50px pink, 0 0 15px darkred;
+    font-style:italic;
+}
+
+div.h80s {
+    font-size:60px;
+    color:#cc00ff;
+    text-shadow: 2px 2px 4px black, 0 0 50px pink, 0 0 15px darkred;
+    font-style:italic;
+    -ms-transform: rotate(-20deg); /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Safari 3-8 */
+    transform: rotate(-20deg);
+    position: relative;
+    bottom: 70px;
+    left: 150px;
+}
+.border-dashed {
+    border-style:dashed;
+    border-width:2px;
+    padding:25;
+    margin:0;
+    width:100%
+    }
+p{
+    font-family: 'Permanent Marker', cursive;
+    font-size: 30px;
+    font-style: oblique;
+}
