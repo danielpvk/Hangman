@@ -68,7 +68,7 @@
                 for (var j=0; j < wg.length; j++)
                 {
                     if (wg[j]==" "){
-                        w=w.concat("  ");
+                        w=w.concat(" -");
                     }
                     else{
                        w=w.concat("_ ");
@@ -96,7 +96,7 @@
                     if (!this.wordLayout.includes("_")){
                         game.gameStart=false;
                         game.win++;
-                        debugger;
+                    
                         game.text1.textContent="You Win!!!";
                         game.text2.textContent="Press any key to play again";
                         game.winText.textContent=game.win.toString();
