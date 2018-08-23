@@ -1,4 +1,7 @@
 
+body {
+    background-color:#000000;
+}
 h1 {
     font-size:80px;
     color: white;
@@ -29,4 +32,5 @@ p{
     font-family: 'Permanent Marker', cursive;
     font-size: 30px;
     font-style: oblique;
+    color:#ffffff;
 }

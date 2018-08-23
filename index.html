@@ -12,7 +12,7 @@
 
     </head>
 
-    <body background="assets/images/pyramid.png">
+    <body background-color="#000000">
         <div class="container">
             <div class="row">
                   <div class="col-sm-12 text-center">
@@ -23,16 +23,19 @@
            </div>
            <div class="row">
                <div class="col-sm-6 border-dashed text-center">
-            
+                <br>
+                <p> Wins : <span id="win-text"><strong>....</strong></span></p>
+                <p> Losts : <span id="loss-text"><strong>....</strong></span></p>
+             
                </div>
                <div class="col-sm-6 border-dashed text-center">
                     <br>
                     <p> Press any kit to get</p>
                     <p> STARTED!!!</p>
                     <br>
-                    <p> Wins : <span id="win-text"><strong>....</strong></span></p>
-                    <p> Losts : <span id="lost-text"><strong>....</strong></span></p>
-                    <p> <span id="letter-1"></span>
+                      <br>
+                    <p> <span id="guessed-letters">  </span></p>
+                    <p> <span id="band-to-guess"></span>
                         <span id="letter-2"></span>
                         <span id="letter-3"></span>
                         <span id="letter-4"></span>
@@ -53,23 +56,119 @@
 
     <script type="text/javascript">
         // Let's start by grabbing a reference to the <span> below.
-        var letter1 = document.getElementById("letter-1");
-        var letter2 = document.getElementById("letter-2");
-        var letter3 = document.getElementById("letter-3");
-        var letter4 = document.getElementById("letter-4");
-        var letter5 = document.getElementById("letter-5");
-        var letter6 = document.getElementById("letter-6");
-        var letter7 = document.getElementById("letter-7");
-        var letter8 = document.getElementById("letter-8");
-        var winText = document.getElementById("win-text");
-        var lossText = document.getElementById("loss-text");
-        var win=0;// win and lost variables
-        var loss=0;
         
+        var screenLetters = { 
+           letter1 : document.getElementById("letter-1"),
+            letter2 : document.getElementById("letter-2"),
+        };
+        var words = {
+            bands:["Van Halen","Def Leppard","Aerosmith","Motley Crue","Iron Maiden","The Smiths","Twisted Sister","Joy Division"],
+            guessIndexBand:0,
+            randomBand: function(){
+                var aleatorio=Math.floor((Math.random()*this.bands.length)-1);
+                guessIndexBand=aleatorio;
+                return words.bands[guessIndexBand];
+            }
+        };
+        var guess={
+            wordToGuess:"",
+            wordLayout:"",
+            wordLayoutInit: function(wg){
+                debugger;
+                var w="";
+                for (var j=0; j < wg.length; j++)
+                {
+                    if (wg[j]==" "){
+                        w=w.concat("    ");
+                    }
+                    else{
+                       // this.wordLayout[j]=" ";
+                        w=w.concat("_ ");
+                    }
+                }
+                return w;
+            },
+            wordLayoutFill: function (key){
+                for (var i=0; i<this.wordToGuess.length;i++){
+                    if (key==this.wordToGuess[i].toLowerCase()){
+                        this.wordLayout=this.wordLayout.substring(0, i*2) + key + this.wordLayout.substring((i*2)+1);
+                    }
+                }
+                this.bandToGuess.textContent = this.wordLayout;
+            },
+            //alphabeth=["a","b","c","d","e","f","g","h","i","k","j","l","m","n","o","p","q","r","s","t","u","v","x","y","z"],
+            keysPressed:[],
+            keysInScreen:document.getElementById("guessed-letters"),
+            bandToGuess:document.getElementById("band-to-guess"),
+            lettersguessed:0,
+            guessed: function(letter){
+                
+                if (this.wordToGuess.toLowerCase().includes(letter))
+                {
+                    this.wordLayoutFill(letter);
+                    if (!this.wordLayout.includes("_")){
+                        game.gameStart=false;
+                        game.win++;
+                        game.winText.textContent=game.win.toString();
+                    }
+                }
+                else{
+                    game.triesLeft--;
+                }
+            },
+            alreadyPressed: function(key){
+                debugger;
+                if (this.keysPressed.includes(key)){
+                    
+                  
+                 }
+                else {
+                   this.keysPressed.push(key);
+                   this.guessed(key.toLowerCase());
+                   
+                }
+                 
+                this.keysInScreen.textContent=this.keysPressed.toString();
+       //         this.keysInScreen.textContent="a";
+            }
+
+        };
+        var game = {
+            gameStart:false,
+            lostText : document.getElementById("loss-text"),
+            winText: document.getElementById("win-text"),
+            win:0,
+            lost:0,
+            triesLeft:8,
+            
+            
+        };
            
         // Next, we give JavaScript a function to execute when onkeyup event fires.
         document.onkeyup = function(event) {
-            letter1.textContent = event.key;//
+          if (game.gameStart==false){
+              debugger;
+              game.gameStart=true;
+              guess.keysPressed.length=0; // we clear the array
+              game.triesLeft=8;
+              guess.wordToGuess=words.randomBand();
+              guess.wordLayout=guess.wordLayoutInit(guess.wordToGuess); //here we fill a word with '_'
+              guess.bandToGuess.textContent = guess.wordLayout;//
+         
+          }
+          else {
+              debugger;
+            if (game.triesLeft>0){
+                guess.alreadyPressed(event.key);
+            }
+            else{
+                game.gameStart=false;
+                game.lost++;
+                game.lostText.textContent=game.lost.toString();
+            }
+          } 
+           
+            
         };
       </script>
 </html>
