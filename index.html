@@ -30,19 +30,13 @@
                </div>
                <div class="col-sm-6 border-dashed text-center">
                     <br>
-                    <p> Press any Key to get</p>
-                    <p> STARTED!!!</p>
+                    <p id="text-1"> Press any Key to get</p>
+                    <p id="text-2"> STARTED!!!</p>
                     <br>
                       <br>
                     <p> <span id="guessed-letters">  </span></p>
                     <p> <span id="band-to-guess"></span>
-                        <span id="letter-2"></span>
-                        <span id="letter-3"></span>
-                        <span id="letter-4"></span>
-                        <span id="letter-5"></span> 
-                        <span id="letter-6"></span>
-                        <span id="letter-7"></span>
-                        <span id="letter-8"></span>
+  
                     </P>
  
                 </div>
@@ -57,33 +51,27 @@
     <script type="text/javascript">
         // Let's start by grabbing a reference to the <span> below.
         
-        var screenLetters = { 
-           letter1 : document.getElementById("letter-1"),
-            letter2 : document.getElementById("letter-2"),
-        };
         var words = {
             bands:["Van Halen","Def Leppard","Aerosmith","Motley Crue","Iron Maiden","The Smiths","Twisted Sister","Joy Division"],
             guessIndexBand:0,
             randomBand: function(){
-                var aleatorio=Math.floor((Math.random()*this.bands.length)-1);
-                guessIndexBand=aleatorio;
-                return words.bands[guessIndexBand];
+                this.guessIndexBand=Math.floor((Math.random()*this.bands.length));
+                return this.bands[this.guessIndexBand];
             }
         };
         var guess={
             wordToGuess:"",
             wordLayout:"",
             wordLayoutInit: function(wg){
-                debugger;
+             
                 var w="";
                 for (var j=0; j < wg.length; j++)
                 {
                     if (wg[j]==" "){
-                        w=w.concat("    ");
+                        w=w.concat("  ");
                     }
                     else{
-                       // this.wordLayout[j]=" ";
-                        w=w.concat("_ ");
+                       w=w.concat("_ ");
                     }
                 }
                 return w;
@@ -100,7 +88,6 @@
             keysPressed:[],
             keysInScreen:document.getElementById("guessed-letters"),
             bandToGuess:document.getElementById("band-to-guess"),
-            lettersguessed:0,
             guessed: function(letter){
                 
                 if (this.wordToGuess.toLowerCase().includes(letter))
@@ -109,7 +96,12 @@
                     if (!this.wordLayout.includes("_")){
                         game.gameStart=false;
                         game.win++;
+                        debugger;
+                        game.text1.textContent="You Win!!!";
+                        game.text2.textContent="Press any key to play again";
                         game.winText.textContent=game.win.toString();
+                        this.keysPressed.length=0;
+                        this.keysInScreen.textContent=this.keysPressed.toString();
                     }
                 }
                 else{
@@ -117,19 +109,20 @@
                 }
             },
             alreadyPressed: function(key){
-                debugger;
+              
                 if (this.keysPressed.includes(key)){
                     
                   
                  }
                 else {
                    this.keysPressed.push(key);
+                
                    this.guessed(key.toLowerCase());
                    
                 }
                  
                 this.keysInScreen.textContent=this.keysPressed.toString();
-       //         this.keysInScreen.textContent="a";
+      
             }
 
         };
@@ -140,31 +133,38 @@
             win:0,
             lost:0,
             triesLeft:8,
-            
+            text1:document.getElementById("text-1"),
+            text2:document.getElementById("text-2"),
             
         };
            
         // Next, we give JavaScript a function to execute when onkeyup event fires.
         document.onkeyup = function(event) {
           if (game.gameStart==false){
-              debugger;
+             
               game.gameStart=true;
               guess.keysPressed.length=0; // we clear the array
               game.triesLeft=8;
               guess.wordToGuess=words.randomBand();
               guess.wordLayout=guess.wordLayoutInit(guess.wordToGuess); //here we fill a word with '_'
               guess.bandToGuess.textContent = guess.wordLayout;//
-         
+              game.text1.textContent="Tries left: "+game.triesLeft.toString();
+              game.text2.textContent="Clue: It's an 80s rock band";
           }
           else {
-              debugger;
+            
             if (game.triesLeft>0){
+                game.text1.textContent="Tries left: "+game.triesLeft.toString();
                 guess.alreadyPressed(event.key);
             }
             else{
                 game.gameStart=false;
                 game.lost++;
                 game.lostText.textContent=game.lost.toString();
+                game.text1.textContent="You lost!!!";
+                game.text2.textContent="Press any key to play";
+                guess.keysPressed.length=0;
+                guess.keysInScreen.textContent="";
             }
           } 
            
