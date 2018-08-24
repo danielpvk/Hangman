@@ -51,18 +51,18 @@
     <script type="text/javascript">
         // Let's start by grabbing a reference to the <span> below.
         
-        var words = {
+        var words = {  // this is the object of the bands to be guessed
             bands:["Queen","Bon Jovi","The Cure","Duran Duran","Skid Row","Van Halen","Def Leppard","Aerosmith","Motley Crue","Iron Maiden","The Smiths","Twisted Sister","Joy Division"],
-            guessIndexBand:0,
-            randomBand: function(){
+            guessIndexBand:0,  //this is the index of a random band
+            randomBand: function(){  //this is a function to select a random band
                 this.guessIndexBand=Math.floor((Math.random()*this.bands.length));
                 return this.bands[this.guessIndexBand];
             }
         };
-        var guess={
-            wordToGuess:"",
-            wordLayout:"",
-            wordLayoutInit: function(wg){
+        var guess={   // guess is the object were we analize if the word we are guessing is wrong or right
+            wordToGuess:"",  //this is the property that stores the actual band to guess
+            wordLayout:"",  // this is an auxiliar property fill with "_" with the same layout as the band to guess
+            wordLayoutInit: function(wg){  // this method will fill wordLayout with the same amout of "_" as the amout of letters of the band's name
              
                 var w="";
                 for (var j=0; j < wg.length; j++)
@@ -76,7 +76,7 @@
                 }
                 return w;
             },
-            wordLayoutFill: function (key){
+            wordLayoutFill: function (key){ // this method replace the "_" with the letters we have guessed
                 for (var i=0; i<this.wordToGuess.length;i++){
                     if (key==this.wordToGuess[i].toLowerCase()){
                         this.wordLayout=this.wordLayout.substring(0, i*2) + key + this.wordLayout.substring((i*2)+1);
@@ -84,11 +84,10 @@
                 }
                 this.bandToGuess.textContent = this.wordLayout;
             },
-            //alphabeth=["a","b","c","d","e","f","g","h","i","k","j","l","m","n","o","p","q","r","s","t","u","v","x","y","z"],
-            keysPressed:[],
-            keysInScreen:document.getElementById("guessed-letters"),
-            bandToGuess:document.getElementById("band-to-guess"),
-            guessed: function(letter){
+            keysPressed:[],//this arrays stores the letters that we have already pressed
+            keysInScreen:document.getElementById("guessed-letters"),//with this we print the letters we have pressed
+            bandToGuess:document.getElementById("band-to-guess"),//this id is to set the letters that we have guessed
+            guessed: function(letter){  //this method find if we have finished to guess the letter or how many tries left we have
                 
                 if (this.wordToGuess.toLowerCase().includes(letter))
                 {
@@ -108,7 +107,7 @@
                     game.triesLeft--;
                 }
             },
-            alreadyPressed: function(key){
+            alreadyPressed: function(key){//this is the method that determines if the key pressed we have already pressed 
               
                 if (this.keysPressed.includes(key)){
                     
@@ -126,20 +125,20 @@
             }
 
         };
-        var game = {
-            gameStart:false,
-            lostText : document.getElementById("loss-text"),
-            winText: document.getElementById("win-text"),
-            win:0,
-            lost:0,
-            triesLeft:8,
-            text1:document.getElementById("text-1"),
-            text2:document.getElementById("text-2"),
+        var game = {  //object that stores how many times we have win or loss
+            gameStart:false,  // this property see if the game have started
+            lostText : document.getElementById("loss-text"), //id of how many times have we loss
+            winText: document.getElementById("win-text"),// id of how many we have won
+            win:0,  //property that stores how many times we have won
+            lost:0, //property that stores how many times we have loss
+            triesLeft:8, //property that stores how many tries we have
+            text1:document.getElementById("text-1"),//id of gral info
+            text2:document.getElementById("text-2"),//id of gral info
             
         };
            
         // Next, we give JavaScript a function to execute when onkeyup event fires.
-        document.onkeyup = function(event) {
+        document.onkeyup = function(event) {  // this method sets what to do when a key is pressed.
           if (game.gameStart==false){
              
               game.gameStart=true;
